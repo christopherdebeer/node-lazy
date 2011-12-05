@@ -1,7 +1,15 @@
-var EventEmitter = require('events').EventEmitter;
+
+if (typeof module != 'undefined' && module.exports) {
+    // if its a node module then load EventEmitter
+    var EventEmitter = require('events').EventEmitter;
+    module.exports = Lazy
+} else {
+    // otherwise use EventEmitter2 for the browser ( requires https://github.com/hij1nx/EventEmitter2 )
+    var EventEmitter = EventEmitter2;
+}
 
 Lazy.prototype = new EventEmitter;
-module.exports = Lazy;
+
 function Lazy (em, opts) {
     if (!(this instanceof Lazy)) return new Lazy(em, opts);
     var self = this;
